@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Label layoutX="978.0" layoutY="14.0" text="Код" />
+      <TextField layoutX="914.0" layoutY="32.0" />
+      <TextField layoutX="914.0" layoutY="70.0" />
+      <Label layoutX="785.0" layoutY="36.0" text="Форма по ОКУД" />
+      <Label layoutX="835.0" layoutY="74.0" text="по ОКПО" />
+      <TextField layoutX="14.0" layoutY="31.0" prefHeight="26.0" prefWidth="660.0" promptText="Организация" />
+      <TextField layoutX="14.0" layoutY="69.0" prefHeight="26.0" prefWidth="660.0" promptText="Структурное подразделение" />
+      <TextField layoutX="914.0" layoutY="114.0" />
+      <Label layoutX="712.0" layoutY="118.0" text="Вид деятельности по ОКДП" />
+      <TextField layoutX="914.0" layoutY="151.0" />
+      <Label layoutX="799.0" layoutY="155.0" text="Вид операции" />
+      <TextField layoutX="748.0" layoutY="207.0" promptText="Номер документа" />
+      <TextField layoutX="914.0" layoutY="207.0" promptText="Дата составления" />
+      <TextField layoutX="247.0" layoutY="151.0" promptText="Должность" />
+      <TextField layoutX="408.0" layoutY="151.0" promptText="Фамилия И.О." />
+      <TextField layoutX="574.0" layoutY="151.0" prefHeight="26.0" prefWidth="116.0" promptText="Табельный номер" />
+      <Label layoutX="5.0" layoutY="155.0" text="Материально ответственное лицо" />
+      <TableView fx:id="tableStrings" layoutX="1.0" layoutY="246.0" prefHeight="554.0" prefWidth="1080.0">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="31.199996948242188" text="№" />
+            <TableColumn fx:id="nameColumn" prefWidth="172.0">
+            </TableColumn>
+            <TableColumn fx:id="sumFactRealizeColumn" prefWidth="136.7999725341797" text="Сумма фактической реализации" />
+            <TableColumn fx:id="dateColumn" minWidth="0.0" prefWidth="69.5999755859375" text="Дата" />
+            <TableColumn fx:id="numberColumn" prefWidth="72.0" text="Номер" />
+            <TableColumn fx:id="sumUchotColumn" prefWidth="151.20001220703125" text="Стоимость по учетным ценам" />
+            <TableColumn fx:id="productColumn" prefWidth="74.4000244140625" text="Продукты" />
+            <TableColumn fx:id="speciiAndSoltColumn" prefWidth="95.199951171875" text="Специи и соль" />
+            <TableColumn fx:id="taraColumn" prefWidth="56.800048828125" text="Тара" />
+            <TableColumn fx:id="steklotaraColumn" prefWidth="81.60003662109375" text="Стеклотара" />
+            <TableColumn fx:id="buhOtmetkiColumn" prefWidth="138.39996337890625" text="Отметки бухгалтерии" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
