@@ -4,21 +4,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="836.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <Label layoutX="965.0" layoutY="82.0" text="Код" />
-      <TextField layoutX="914.0" layoutY="114.0" />
+      <TextField fx:id="OKPO" layoutX="914.0" layoutY="114.0" />
       <Label layoutX="830.0" layoutY="118.0" text="по ОКПО" />
-      <TextField layoutX="14.0" layoutY="101.0" prefHeight="26.0" prefWidth="660.0" promptText="Организация" />
-      <TextField layoutX="914.0" layoutY="150.0" />
+      <TextField fx:id="nameOrganizaition" layoutX="14.0" layoutY="101.0" prefHeight="26.0" prefWidth="660.0" promptText="Организация" />
+      <TextField fx:id="OKDP" layoutX="914.0" layoutY="150.0" />
       <Label layoutX="712.0" layoutY="154.0" text="Вид деятельности по ОКДП" />
-      <TextField layoutX="914.0" layoutY="194.0" />
+      <TextField fx:id="typeOperation" layoutX="914.0" layoutY="194.0" />
       <Label layoutX="799.0" layoutY="198.0" text="Вид операции" />
-      <TextField layoutX="712.0" layoutY="18.0" promptText="Номер документа" />
-      <TextField layoutX="914.0" layoutY="19.0" promptText="Дата составления" />
-      <TextField layoutX="244.0" layoutY="194.0" promptText="Должность" />
-      <TextField layoutX="405.0" layoutY="194.0" promptText="Фамилия И.О." />
-      <TextField layoutX="571.0" layoutY="194.0" prefHeight="26.0" prefWidth="116.0" promptText="Табельный номер" />
+      <TextField fx:id="numberDocument" layoutX="712.0" layoutY="18.0" promptText="Номер документа" />
+      <TextField fx:id="dateSost" layoutX="914.0" layoutY="19.0" promptText="Дата составления" />
+      <TextField fx:id="fio" layoutX="405.0" layoutY="194.0" promptText="Фамилия И.О." />
+      <TextField fx:id="tableNum" layoutX="571.0" layoutY="194.0" prefHeight="26.0" prefWidth="116.0" promptText="Табельный номер" />
       <Label layoutX="2.0" layoutY="198.0" text="Материально ответственное лицо" />
       <TableView fx:id="tableStrings" editable="true" layoutX="10.0" layoutY="285.0" prefHeight="394.0" prefWidth="1080.0">
         <columns>
@@ -36,12 +35,12 @@
             <TableColumn fx:id="buhOtmetkiColumn" prefWidth="138.39996337890625" text="Отметки бухгалтерии" />
         </columns>
       </TableView>
-      <ComboBox layoutX="14.0" layoutY="149.0" prefHeight="28.0" prefWidth="660.0" promptText="Структурное подразделение" />
+      <ComboBox fx:id="structPodr" layoutX="14.0" layoutY="149.0" prefHeight="28.0" prefWidth="660.0" promptText="Структурное подразделение" />
       <Label layoutX="362.0" layoutY="23.0" text="ВЕДОМОСТЬ УЧЕТА" />
       <Label layoutX="276.0" layoutY="45.0" text="ДВИЖЕНИЯ ПРОДУКТОВ И ТАРЫ НА КУХНЕ" />
       <Label layoutX="361.0" layoutY="63.0" text="(ТОВАРНЫЙ ОТЧЕТ)" />
-      <Button layoutX="2.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Приход" textFill="#211f1f" />
-      <Button layoutX="110.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Расход" />
+      <Button id="prixod" layoutX="2.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Приход" textFill="#211f1f" />
+      <Button id="rasxod" layoutX="110.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Расход" />
       <Label layoutX="48.0" layoutY="679.0" text="Итого по приходу">
          <font>
             <Font size="15.0" />
@@ -50,6 +49,39 @@
       <Label layoutX="49.0" layoutY="712.0" text="Фактический остаток" />
       <Label layoutX="48.0" layoutY="739.0" text="Излишки" />
       <Label layoutX="49.0" layoutY="767.0" text="Недостача" />
-      <Button layoutX="881.0" layoutY="741.0" mnemonicParsing="false" text="Расшифровка подписей" />
+      <ComboBox fx:id="dolgnost" layoutX="243.0" layoutY="195.0" prefWidth="150.0" promptText="Должность" />
+      <Label fx:id="sumTotal" layoutX="214.0" layoutY="676.0" prefHeight="26.0" prefWidth="136.0" style="-fx-border-color: silver;" />
+      <Label fx:id="dateTotal" layoutX="348.0" layoutY="676.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="numTotal" layoutX="425.0" layoutY="676.0" prefHeight="26.0" prefWidth="68.0" style="-fx-border-color: silver;" />
+      <Label fx:id="stoimostTotal" layoutX="493.0" layoutY="676.0" prefHeight="26.0" prefWidth="150.0" style="-fx-border-color: silver;" />
+      <Label fx:id="productTotal" layoutX="646.0" layoutY="676.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="speciiAndSoltTotal" layoutX="720.0" layoutY="676.0" prefHeight="26.0" prefWidth="94.0" style="-fx-border-color: silver;" />
+      <Label fx:id="taraTotal" layoutX="816.0" layoutY="676.0" prefHeight="26.0" prefWidth="58.0" style="-fx-border-color: silver;" />
+      <Label fx:id="steklotaraTotal" layoutX="873.0" layoutY="676.0" prefHeight="26.0" prefWidth="82.0" style="-fx-border-color: silver;" />
+      <Label fx:id="sumFactOst" layoutX="214.0" layoutY="708.0" prefHeight="26.0" prefWidth="136.0" style="-fx-border-color: silver;" />
+      <Label fx:id="dateFactOst" layoutX="348.0" layoutY="708.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="numFactOst" layoutX="425.0" layoutY="708.0" prefHeight="26.0" prefWidth="68.0" style="-fx-border-color: silver;" />
+      <Label fx:id="stoimostFactOst" layoutX="493.0" layoutY="708.0" prefHeight="26.0" prefWidth="150.0" style="-fx-border-color: silver;" />
+      <Label fx:id="productFactOst" layoutX="646.0" layoutY="708.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="speciiAndSoltFactOst" layoutX="719.0" layoutY="708.0" prefHeight="26.0" prefWidth="94.0" style="-fx-border-color: silver;" />
+      <Label fx:id="taraFactOst" layoutX="815.0" layoutY="708.0" prefHeight="26.0" prefWidth="58.0" style="-fx-border-color: silver;" />
+      <Label fx:id="steklotaraFactOst" layoutX="872.0" layoutY="708.0" prefHeight="26.0" prefWidth="82.0" style="-fx-border-color: silver;" />
+      <Label fx:id="sumExcess" layoutX="214.0" layoutY="735.0" prefHeight="26.0" prefWidth="136.0" style="-fx-border-color: silver;" />
+      <Label fx:id="dateExcess" layoutX="348.0" layoutY="735.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="numExcess" layoutX="425.0" layoutY="735.0" prefHeight="26.0" prefWidth="68.0" style="-fx-border-color: silver;" />
+      <Label fx:id="stoimostExcess" layoutX="493.0" layoutY="735.0" prefHeight="26.0" prefWidth="150.0" style="-fx-border-color: silver;" />
+      <Label fx:id="productExcess" layoutX="646.0" layoutY="735.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="speciiAndSoltExcess" layoutX="720.0" layoutY="735.0" prefHeight="26.0" prefWidth="94.0" style="-fx-border-color: silver;" />
+      <Label fx:id="taraExcess" layoutX="816.0" layoutY="735.0" prefHeight="26.0" prefWidth="58.0" style="-fx-border-color: silver;" />
+      <Label fx:id="steklotaraExcess" layoutX="873.0" layoutY="735.0" prefHeight="26.0" prefWidth="82.0" style="-fx-border-color: silver;" />
+      <Label fx:id="sumDeficit" layoutX="214.0" layoutY="760.0" prefHeight="26.0" prefWidth="136.0" style="-fx-border-color: silver;" />
+      <Label fx:id="dateDeficit" layoutX="348.0" layoutY="760.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="numDeficit" layoutX="425.0" layoutY="760.0" prefHeight="26.0" prefWidth="68.0" style="-fx-border-color: silver;" />
+      <Label fx:id="stoimostDeficit" layoutX="493.0" layoutY="760.0" prefHeight="26.0" prefWidth="150.0" style="-fx-border-color: silver;" />
+      <Label fx:id="productDeficit" layoutX="646.0" layoutY="760.0" prefHeight="26.0" prefWidth="74.0" style="-fx-border-color: silver;" />
+      <Label fx:id="speciiAndSoltDeficit" layoutX="720.0" layoutY="760.0" prefHeight="26.0" prefWidth="94.0" style="-fx-border-color: silver;" />
+      <Label fx:id="taraDeficit" layoutX="816.0" layoutY="760.0" prefHeight="26.0" prefWidth="58.0" style="-fx-border-color: silver;" />
+      <Label fx:id="steklotaraDeficit" layoutX="873.0" layoutY="760.0" prefHeight="26.0" prefWidth="82.0" style="-fx-border-color: silver;" />
+      <Button fx:id="rashPodpisi" layoutX="881.0" layoutY="790.0" mnemonicParsing="false" onAction="#onClickRush" text="Расшифровка подписей" />
    </children>
 </AnchorPane>
