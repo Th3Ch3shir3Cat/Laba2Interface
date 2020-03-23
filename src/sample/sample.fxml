@@ -39,8 +39,8 @@
       <Label layoutX="362.0" layoutY="23.0" text="ВЕДОМОСТЬ УЧЕТА" />
       <Label layoutX="276.0" layoutY="45.0" text="ДВИЖЕНИЯ ПРОДУКТОВ И ТАРЫ НА КУХНЕ" />
       <Label layoutX="361.0" layoutY="63.0" text="(ТОВАРНЫЙ ОТЧЕТ)" />
-      <Button id="prixod" layoutX="2.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Приход" textFill="#211f1f" />
-      <Button id="rasxod" layoutX="110.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Расход" />
+      <Button fx:id="prixod" onAction="#onClickPrixod" layoutX="2.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Приход" textFill="#211f1f" />
+      <Button fx:id="rasxod" onAction="#onClickRasxod" layoutX="110.0" layoutY="251.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="94.0" style="-fx-background-color: #fafafa; -fx-border-color: silver;" text="Расход" />
       <Label layoutX="48.0" layoutY="679.0" text="Итого по приходу">
          <font>
             <Font size="15.0" />

@@ -2,26 +2,23 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import sample.Information.InfoAboutCompany;
 import sample.Table.StringTableFirst;
 
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Controller {
+
+    private static int numTable = 1;
 
     /**
      * Шапка
@@ -59,8 +56,24 @@ public class Controller {
     /**
      * Таблица
      */
-    private ObservableList<StringTableFirst> stringData = FXCollections.observableArrayList();
+
+    /**
+     * Для прихода
+     */
+    private final ObservableList<StringTableFirst> stringData = FXCollections.observableArrayList();
     private static int count = 1;
+
+    @FXML
+    private Button prixod;
+
+    /**
+     * Для расхода
+     */
+    private final ObservableList<StringTableFirst> stringDataForRash = FXCollections.observableArrayList();
+    private static int countRash = 1;
+
+    @FXML
+    private Button rasxod;
 
     @FXML
     private TableView<StringTableFirst> tableStrings;
@@ -114,8 +127,6 @@ public class Controller {
     @FXML
     private Label dateTotal;
 
-    @FXML
-    private Label numTotal;
 
     @FXML
     private Label stoimostTotal;
@@ -141,8 +152,6 @@ public class Controller {
     @FXML
     private Label dateFactOst;
 
-    @FXML
-    private Label numFactOst;
 
     @FXML
     private Label stoimostFactOst;
@@ -169,8 +178,6 @@ public class Controller {
     @FXML
     private Label dateExcess;
 
-    @FXML
-    private Label numExcess;
 
     @FXML
     private Label stoimostExcess;
@@ -197,8 +204,6 @@ public class Controller {
     @FXML
     private Label dateDeficit;
 
-    @FXML
-    private Label numDeficit;
 
     @FXML
     private Label stoimostDeficit;
@@ -220,6 +225,18 @@ public class Controller {
     private void onClickRush(){
         //System.out.println(nameOrganizaition.getText());
 
+    }
+
+    @FXML
+    private void onClickPrixod(){
+        tableStrings.setItems(stringData);
+        numTable = 1;
+    }
+
+    @FXML
+    private void onClickRasxod(){
+        tableStrings.setItems(stringDataForRash);
+        numTable = 2;
     }
 
     @FXML
@@ -270,7 +287,7 @@ public class Controller {
         editStringCell(buhOtmetkiColumn,"BuhOtmetki");
 
 
-        tableStrings.setItems(stringData);
+
 
     }
 
@@ -308,6 +325,9 @@ public class Controller {
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
         stringData.add(new StringTableFirst(1,"Остаток на начало дня", 22500,formatForDateNow.format(dateNow),53,33400,22403,10200,9000,4532,""));
         count++;
+
+        stringDataForRash.add(new StringTableFirst(1,""));
+        countRash++;
 
         sumTotal.setText(getSum("sumTotal").toString());
         dateTotal.setText(formatForDateNow.format(dateNow));
@@ -354,8 +374,14 @@ public class Controller {
                 case("Name"):
                     stringTableFirst.setName(newName);
                     if(newName.length() != 0) {
-                        stringData.add(new StringTableFirst(count, ""));
-                        count++;
+                        if(numTable == 1 && row == stringData.size()-1) {
+                            stringData.add(new StringTableFirst(count, ""));
+                            count++;
+                        }
+                        else if (numTable == 2 && row == stringDataForRash.size()-1){
+                            stringDataForRash.add(new StringTableFirst(countRash,""));
+                            countRash++;
+                        }
                     }
                     break;
                 case("BuhOtmetki"):
