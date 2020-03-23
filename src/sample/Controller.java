@@ -159,7 +159,6 @@ public class Controller {
                     break;
 
             }
-            stringTableFirst.setSumFactRealize(newName);
         });
     }
 
