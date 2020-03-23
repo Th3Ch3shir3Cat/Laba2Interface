@@ -6,8 +6,8 @@ public class StringTableFirst {
     private Integer id;
     private String Name;            //Наименование
     private Integer SumFactRealize;  //Сумма фактической реализации
-    private Date DocumentDate;      //Дата документа
-    private Long DocumentNumber;    //Номер документа
+    private String DocumentDate;      //Дата документа
+    private Integer DocumentNumber;    //Номер документа
     private Integer SumUchot;        //Стоимость по учетным ценам
     private Integer Product;         //Продукты
     private Integer SpeciiAndSolt;   //Специи и соль
@@ -16,7 +16,7 @@ public class StringTableFirst {
     private String BuhOtmetki;      //Отметки бухгалтерии
 
     public StringTableFirst(Integer id, String name, Integer sumFactRealize,
-                            Date documentDate, Long documentNumber, Integer sumUchot, Integer product,
+                            String documentDate, Integer documentNumber, Integer sumUchot, Integer product,
                             Integer speciiAndSolt, Integer tara, Integer steklotara, String buhOtmetki) {
         this.id = id;
         Name = name;
@@ -52,11 +52,11 @@ public class StringTableFirst {
         SumFactRealize = sumFactRealize;
     }
 
-    public void setDocumentDate(Date documentDate) {
+    public void setDocumentDate(String documentDate) {
         DocumentDate = documentDate;
     }
 
-    public void setDocumentNumber(Long documentNumber) {
+    public void setDocumentNumber(Integer documentNumber) {
         DocumentNumber = documentNumber;
     }
 
@@ -92,11 +92,11 @@ public class StringTableFirst {
         return SumFactRealize;
     }
 
-    public Date getDocumentDate() {
+    public String getDocumentDate() {
         return DocumentDate;
     }
 
-    public Long getDocumentNumber() {
+    public Integer getDocumentNumber() {
         return DocumentNumber;
     }
 

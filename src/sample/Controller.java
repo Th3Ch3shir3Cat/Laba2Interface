@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Table.StringTableFirst;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Controller {
@@ -71,8 +72,9 @@ public class Controller {
     }
 
     private void initData(){
-        stringData.add(new StringTableFirst(1,"Остаток на начало дня"));
-        stringData.add(new StringTableFirst(2,"Приход"));
+        Date dateNow = new Date();
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+        stringData.add(new StringTableFirst(1,"Остаток на начало дня", 22500,formatForDateNow.format(dateNow),53,33400,22403,10200,9000,4532,""));
     }
 
 }
