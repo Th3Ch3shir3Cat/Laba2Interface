@@ -238,41 +238,42 @@ public class Controller {
         dolgnost.getItems().setAll("Главный бухгалтер", "Неглавный бухгалтер", "Директор", "Зам.директора");
         initData();
 
-        idColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        nameColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,String>("Name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
         editStringCell(nameColumn,"Name");
 
-        sumFactRealizeColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("SumFactRealize"));
+        sumFactRealizeColumn.setCellValueFactory(new PropertyValueFactory<>("SumFactRealize"));
         editIntegerCell(sumFactRealizeColumn,"SumFactRealize");
 
-        dateColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Date>("DocumentDate"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("DocumentDate"));
 
-        numberColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("DocumentNumber"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("DocumentNumber"));
         editIntegerCell(numberColumn,"DocumentNumber");
 
-        sumUchotColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("SumUchot"));
+        sumUchotColumn.setCellValueFactory(new PropertyValueFactory<>("SumUchot"));
         editIntegerCell(sumUchotColumn,"SumUchot");
 
-        productColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("Product"));
+        productColumn.setCellValueFactory(new PropertyValueFactory<>("Product"));
         editIntegerCell(productColumn,"Product");
 
-        speciiAndSoltColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("SpeciiAndSolt"));
+        speciiAndSoltColumn.setCellValueFactory(new PropertyValueFactory<>("SpeciiAndSolt"));
         editIntegerCell(speciiAndSoltColumn,"SpeciiAndSolt");
 
-        taraColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("Tara"));
+        taraColumn.setCellValueFactory(new PropertyValueFactory<>("Tara"));
         editIntegerCell(taraColumn,"Tara");
 
-        steklotaraColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,Integer>("Steklotara"));
+        steklotaraColumn.setCellValueFactory(new PropertyValueFactory<>("Steklotara"));
         editIntegerCell(steklotaraColumn,"Steklotara");
 
-        buhOtmetkiColumn.setCellValueFactory(new PropertyValueFactory<StringTableFirst,String>("BuhOtmetki"));
+        buhOtmetkiColumn.setCellValueFactory(new PropertyValueFactory<>("BuhOtmetki"));
         editStringCell(buhOtmetkiColumn,"BuhOtmetki");
 
 
         tableStrings.setItems(stringData);
 
     }
+
 
     private Integer getSum(String name){
         int sum = 0;
@@ -376,24 +377,30 @@ public class Controller {
             switch(name){
                 case("SumFactRealize"):
                     stringTableFirst.setSumFactRealize(newName);
+                    sumTotal.setText(getSum("sumTotal").toString());
                     break;
                 case("DocumentNumber"):
                     stringTableFirst.setDocumentNumber(newName);
                     break;
                 case("SumUchot"):
                     stringTableFirst.setSumUchot(newName);
+                    stoimostTotal.setText(getSum("stoimostTotal").toString());
                     break;
                 case("Product"):
                     stringTableFirst.setProduct(newName);
+                    productTotal.setText(getSum("productTotal").toString());
                     break;
                 case("SpeciiAndSolt"):
                     stringTableFirst.setSpeciiAndSolt(newName);
+                    speciiAndSoltTotal.setText(getSum("speciiAndSoltTotal").toString());
                     break;
                 case("Tara"):
                     stringTableFirst.setTara(newName);
+                    taraTotal.setText(getSum("taraTotal").toString());
                     break;
                 case("Steklotara"):
                     stringTableFirst.setSteklotara(newName);
+                    steklotaraTotal.setText(getSum("steklotaraTotal").toString());
                     break;
 
             }
