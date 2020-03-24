@@ -1,8 +1,7 @@
 package sample.Table;
 
-import java.util.Date;
-
 public class StringTableFirst {
+
     private Integer id;
     private String Name;            //Наименование
     private Integer SumFactRealize;  //Сумма фактической реализации
