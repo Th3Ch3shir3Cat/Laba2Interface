@@ -56,8 +56,8 @@ public class ControllerForPodpisi {
         mainPodpis.setText("");
         mainRashPodpis.setText("");
 
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        fioColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<StringTableWorkers,Integer>("id"));
+        fioColumn.setCellValueFactory(new PropertyValueFactory<StringTableWorkers, String>("fio"));
         editStringCell(fioColumn);
 
         initData();

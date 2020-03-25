@@ -10,14 +10,58 @@ public class InfoAboutCompany {
     private String okpo;
     private String okdp;
     private String typeOperation;
+    private String structurePodr;
+    private String materialDolgnost;
+    private String materialFIO;
+    private String tableNum;
 
-    public InfoAboutCompany(String nameOrganization, Integer numberDocument, Date dateSost, String okpo, String okdp, String typeOperation) {
+    public InfoAboutCompany(){
+
+    }
+
+    public InfoAboutCompany(String nameOrganization, Integer numberDocument, Date dateSost, String okpo, String okdp, String typeOperation, String structurePodr, String materialDolgnost, String materialFIO, String tableNum) {
         this.nameOrganization = nameOrganization;
         this.numberDocument = numberDocument;
         this.dateSost = dateSost;
         this.okpo = okpo;
         this.okdp = okdp;
         this.typeOperation = typeOperation;
+        this.structurePodr = structurePodr;
+        this.materialDolgnost = materialDolgnost;
+        this.materialFIO = materialFIO;
+        this.tableNum = tableNum;
+    }
+
+    public void setStructurePodr(String structurePodr) {
+        this.structurePodr = structurePodr;
+    }
+
+    public void setMaterialDolgnost(String materialDolgnost) {
+        this.materialDolgnost = materialDolgnost;
+    }
+
+    public void setMaterialFIO(String materialFIO) {
+        this.materialFIO = materialFIO;
+    }
+
+    public void setTableNum(String tableNum) {
+        this.tableNum = tableNum;
+    }
+
+    public String getStructurePodr() {
+        return structurePodr;
+    }
+
+    public String getMaterialDolgnost() {
+        return materialDolgnost;
+    }
+
+    public String getMaterialFIO() {
+        return materialFIO;
+    }
+
+    public String getTableNum() {
+        return tableNum;
     }
 
     public void setNameOrganization(String nameOrganization) {

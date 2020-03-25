@@ -19,9 +19,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import sample.Information.InfoAboutCompany;
 import sample.Table.StringTableFirst;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,6 +32,9 @@ public class Controller {
     private static int numTable = 1;
     private static final Date dateNow = new Date();
     private static final SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+
+    private static InfoAboutCompany infoAboutCompany;
+
     /**
      * Шапка
      */
@@ -233,7 +238,8 @@ public class Controller {
 
 
     @FXML
-    private void onClickRush() throws IOException {
+    private void onClickRush() throws IOException, ParseException {
+        /*
         Stage stage  = (Stage) rashPodpisi.getScene().getWindow();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/podpisi.fxml"));
@@ -243,13 +249,27 @@ public class Controller {
         stage.setTitle("Расшифровка подписей");
         stage.setScene(new Scene(root1));
         stage.show();
+         */
 
+        setInfoAboutCompany();
         RoadToExcel roadToExcel = new RoadToExcel();
-        roadToExcel.createXMLFile();
+        roadToExcel.exportToExcelInfoAboutComp(infoAboutCompany);
+        stringData.add(new StringTableFirst(
+                0,"",Integer.parseInt(sumTotal.getText()),dateTotal.getText(),1,Integer.parseInt(stoimostTotal.getText()),Integer.parseInt(productTotal.getText()),
+                Integer.parseInt(speciiAndSoltTotal.getText()),Integer.parseInt(taraTotal.getText()),Integer.parseInt(steklotaraTotal.getText()),""));
         tableStrings.setItems(stringData);
-        roadToExcel.exportToExcel(tableStrings);
+        roadToExcel.exportToExcelTable(tableStrings,1);
+        stringData.remove(tableStrings.getItems().size()-1);
+        stringDataForRash.add(new StringTableFirst(0,"",getFactOst(Integer.parseInt(sumTotal.getText()),"sumFactOst"),
+                dateFactOst.getText(),1,getFactOst(Integer.parseInt(stoimostTotal.getText()),"stoimostFactOst"),
+                getFactOst(Integer.parseInt(productTotal.getText()),"productTotal"),
+                getFactOst(Integer.parseInt(speciiAndSoltTotal.getText()),"speciiAndSoltFactOst"),
+                getFactOst(Integer.parseInt(taraTotal.getText()),"taraTotal"),
+                getFactOst(Integer.parseInt(steklotaraTotal.getText()),"steklotaraFactOst"),""
+                ));
         tableStrings.setItems(stringDataForRash);
-        roadToExcel.exportToExcel(tableStrings);
+        roadToExcel.exportToExcelTable(tableStrings,2);
+        stringDataForRash.remove(tableStrings.getItems().size()-1);
         roadToExcel.closeFiles();
     }
 
@@ -267,6 +287,8 @@ public class Controller {
 
     @FXML
     private void initialize(){
+
+        infoAboutCompany = new InfoAboutCompany();
 
         nameOrganizaition.setText("");
         OKPO.setText("");
@@ -320,6 +342,23 @@ public class Controller {
         getEditForExcessAndDeficit(steklotaraFactOst,steklotaraDeficit,steklotaraExcess,"steklotaraFactOst","steklotaraTotal");
     }
 
+
+    public void setInfoAboutCompany() throws ParseException {
+        infoAboutCompany.setNumberDocument(Integer.parseInt(numberDocument.getText()));
+        infoAboutCompany.setDateSost(formatForDateNow.parse(dateSost.getText()));
+        infoAboutCompany.setNameOrganization(nameOrganizaition.getText());
+        infoAboutCompany.setOkpo(OKPO.getText());
+        infoAboutCompany.setOkdp(OKDP.getText());
+        infoAboutCompany.setTypeOperation(typeOperation.getText());
+        infoAboutCompany.setStructurePodr(structPodr.getValue());
+        infoAboutCompany.setMaterialDolgnost(dolgnost.getValue());
+        infoAboutCompany.setMaterialFIO(fio.getText());
+        infoAboutCompany.setTableNum(tableNum.getText());
+    }
+
+    public InfoAboutCompany getInfoAboutCompany(){
+        return infoAboutCompany;
+    }
 
     private void getEditForExcessAndDeficit(final TextField textField, final Label labelDeficit, final Label labelExcess, final String name, final String total){
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -381,7 +420,7 @@ public class Controller {
 
     private void initData(){
 
-        stringData.add(new StringTableFirst(1,"Остаток на начало дня", 22500,formatForDateNow.format(dateNow),53,33400,22403,10200,9000,4532,""));
+        stringData.add(new StringTableFirst(1,"I.Остаток на начало дня", 22500,formatForDateNow.format(dateNow),53,33400,22403,10200,9000,4532,""));
         count++;
 
         stringDataForRash.add(new StringTableFirst(1,"",0,formatForDateNow.format(dateNow),null,0,0,0,0,0,""));

@@ -19,8 +19,8 @@
         <module name="Laba2Interface" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Laba2Interface" target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="Laba2Interface" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
