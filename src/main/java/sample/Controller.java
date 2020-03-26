@@ -19,13 +19,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import org.controlsfx.control.textfield.TextFields;
 import sample.Information.InfoAboutCompany;
+import sample.Information.TotalPrixod;
+import sample.Information.TotalRashod;
 import sample.Table.StringTableFirst;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Controller {
 
@@ -34,7 +39,10 @@ public class Controller {
     private static final SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
 
     private static InfoAboutCompany infoAboutCompany;
+    private static TotalPrixod totalPrixod;
+    private static TotalRashod totalRashod;
 
+    private static List<String> list = new ArrayList();
     /**
      * Шапка
      */
@@ -75,7 +83,7 @@ public class Controller {
     /**
      * Для прихода
      */
-    private final ObservableList<StringTableFirst> stringData = FXCollections.observableArrayList();
+    private ObservableList<StringTableFirst> stringData = FXCollections.observableArrayList();
     private static int count = 1;
 
     @FXML
@@ -236,46 +244,115 @@ public class Controller {
     @FXML
     private Label steklotaraDeficit;
 
+    @FXML
+    private Label sumPrixodRashod;
 
     @FXML
+    private Label datePrixodRashod;
+
+    @FXML
+    private Label stoimostPrixodRashod;
+
+    @FXML
+    private Label productPrixodRashod;
+
+    @FXML
+    private Label speciiAndSoltPrixodRashod;
+
+    @FXML
+    private Label taraPrixodRashod;
+
+    @FXML
+    private Label steklotaraPrixodRashod;
+
+    @FXML
+    private Label labelForPrixodRashod;
+    @FXML
     private void onClickRush() throws IOException, ParseException {
-        /*
-        Stage stage  = (Stage) rashPodpisi.getScene().getWindow();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/podpisi.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Расшифровка подписей");
-        stage.setScene(new Scene(root1));
-        stage.show();
-         */
+        stringData.remove(stringData.size()-1);
 
-        setInfoAboutCompany();
-        RoadToExcel roadToExcel = new RoadToExcel();
-        roadToExcel.exportToExcelInfoAboutComp(infoAboutCompany);
+        stringData.add(new StringTableFirst(0,"",Integer.parseInt(totalPrixod.getSumPrixod()),
+                dateTotal.getText(),1,Integer.parseInt(totalPrixod.getStoimostPrixod()),
+                Integer.parseInt(totalPrixod.getProductPrixod()), Integer.parseInt(totalPrixod.getSpeciiAndSoltPrixod()),
+                Integer.parseInt(totalPrixod.getTaraPrixod()), Integer.parseInt(totalPrixod.getSteklotaraPrixod()),""
+                ));
+
         stringData.add(new StringTableFirst(
                 0,"",Integer.parseInt(sumTotal.getText()),dateTotal.getText(),1,Integer.parseInt(stoimostTotal.getText()),Integer.parseInt(productTotal.getText()),
                 Integer.parseInt(speciiAndSoltTotal.getText()),Integer.parseInt(taraTotal.getText()),Integer.parseInt(steklotaraTotal.getText()),""));
-        tableStrings.setItems(stringData);
-        roadToExcel.exportToExcelTable(tableStrings,1);
-        stringData.remove(tableStrings.getItems().size()-1);
-        stringDataForRash.add(new StringTableFirst(0,"",getFactOst(Integer.parseInt(sumTotal.getText()),"sumFactOst"),
-                dateFactOst.getText(),1,getFactOst(Integer.parseInt(stoimostTotal.getText()),"stoimostFactOst"),
-                getFactOst(Integer.parseInt(productTotal.getText()),"productTotal"),
-                getFactOst(Integer.parseInt(speciiAndSoltTotal.getText()),"speciiAndSoltFactOst"),
-                getFactOst(Integer.parseInt(taraTotal.getText()),"taraTotal"),
-                getFactOst(Integer.parseInt(steklotaraTotal.getText()),"steklotaraFactOst"),""
+
+        stringDataForRash.remove(stringDataForRash.size()-1);
+
+        Integer sumFO = getFactOst(Integer.parseInt(sumTotal.getText()),"sumFactOst");
+        Integer stoimostFO = getFactOst(Integer.parseInt(stoimostTotal.getText()),"stoimostFactOst");
+        Integer productFO = getFactOst(Integer.parseInt(productTotal.getText()),"productTotal");
+        Integer speciiAndSoltFO = getFactOst(Integer.parseInt(speciiAndSoltTotal.getText()),"speciiAndSoltFactOst");
+        Integer taraFO = getFactOst(Integer.parseInt(taraTotal.getText()),"taraTotal");
+        Integer steklotaraFO = getFactOst(Integer.parseInt(steklotaraTotal.getText()),"steklotaraFactOst");
+
+        stringDataForRash.add(new StringTableFirst(0,"",
+                Integer.parseInt(totalRashod.getSumRashod()),dateTotal.getText(),
+                1, Integer.parseInt(totalRashod.getStoimostRashod()),
+                Integer.parseInt(totalRashod.getProductRashod()), Integer.parseInt(totalRashod.getSpeciiAndSoltRashod()),
+                Integer.parseInt(totalRashod.getTaraRashod()), Integer.parseInt(totalRashod.getSteklotaraRashod()),""
                 ));
-        tableStrings.setItems(stringDataForRash);
-        roadToExcel.exportToExcelTable(tableStrings,2);
-        stringDataForRash.remove(tableStrings.getItems().size()-1);
-        roadToExcel.closeFiles();
+
+        stringDataForRash.add(new StringTableFirst(0,"",sumFO,
+                dateFactOst.getText(),1,stoimostFO,
+                productFO,
+                speciiAndSoltFO,
+                taraFO,
+                steklotaraFO,""
+                ));
+
+        stringDataForRash.add(new StringTableFirst(0,"",
+                Integer.parseInt(sumFactOst.getText()),dateFactOst.getText(),1,Integer.parseInt(stoimostFactOst.getText()),
+                Integer.parseInt(productFactOst.getText()), Integer.parseInt(speciiAndSoltFactOst.getText()),
+                Integer.parseInt(taraFactOst.getText()),Integer.parseInt(steklotaraFactOst.getText()),""));
+
+        stringDataForRash.add(new StringTableFirst(0,"",
+                Integer.parseInt(sumExcess.getText()),dateExcess.getText(),1,Integer.parseInt(stoimostExcess.getText()),
+                Integer.parseInt(productExcess.getText()), Integer.parseInt(speciiAndSoltExcess.getText()),
+                Integer.parseInt(taraExcess.getText()),Integer.parseInt(steklotaraExcess.getText()),""));
+
+        stringDataForRash.add(new StringTableFirst(0,"",
+                Integer.parseInt(sumDeficit.getText()),dateDeficit.getText(),1,Integer.parseInt(stoimostDeficit.getText()),
+                Integer.parseInt(productDeficit.getText()), Integer.parseInt(speciiAndSoltDeficit.getText()),
+                Integer.parseInt(taraDeficit.getText()),Integer.parseInt(steklotaraDeficit.getText()),""));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/podpisi.fxml"));
+        Parent root = fxmlLoader.load();
+        ControllerForPodpisi controllerForPodpisi = fxmlLoader.getController();
+
+        controllerForPodpisi.setTableView(tableStrings);
+        controllerForPodpisi.setStringData(stringData);
+        controllerForPodpisi.setStringDataForRash(stringDataForRash);
+        controllerForPodpisi.setMaterialPodpis(fio.getText());
+
+        setInfoAboutCompany();
+        controllerForPodpisi.setInfoAboutCompany(infoAboutCompany);
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Расшифровка подписей");
+        stage.setScene(new Scene(root));
+        stage.show();
+
     }
 
     @FXML
     private void onClickPrixod(){
         tableStrings.setItems(stringData);
+        labelForPrixodRashod.setText("Итого по приходу");
+
+        sumPrixodRashod.setText(totalPrixod.getSumPrixod());
+        stoimostPrixodRashod.setText(totalPrixod.getStoimostPrixod());
+        productPrixodRashod.setText(totalPrixod.getProductPrixod());
+        speciiAndSoltPrixodRashod.setText(totalPrixod.getSpeciiAndSoltPrixod());
+        taraPrixodRashod.setText(totalPrixod.getTaraPrixod());
+        steklotaraPrixodRashod.setText(totalPrixod.getSteklotaraPrixod());
+
         numTable = 1;
     }
 
@@ -283,21 +360,113 @@ public class Controller {
     private void onClickRasxod(){
         tableStrings.setItems(stringDataForRash);
         numTable = 2;
+        labelForPrixodRashod.setText("Итого по расходу");
+
+        sumPrixodRashod.setText(totalRashod.getSumRashod());
+        stoimostPrixodRashod.setText(totalRashod.getStoimostRashod());
+        productPrixodRashod.setText(totalRashod.getProductRashod());
+        speciiAndSoltPrixodRashod.setText(totalRashod.getSpeciiAndSoltRashod());
+        taraPrixodRashod.setText(totalRashod.getTaraRashod());
+        steklotaraPrixodRashod.setText(totalRashod.getSteklotaraRashod());
+
+    }
+
+
+    public String getNumTable(String string){
+        if(string.equals("ООО Вымпел"))
+            return "101";
+        else if(string.equals("ООО Заказ"))
+            return "400";
+        else if(string.equals("ООО Едим как дома"))
+            return "777";
+
+        return "";
+    }
+
+    public String getOkpo(String string){
+        if(string.equals("ООО Вымпел"))
+            return "22243";
+        else if(string.equals("ООО Заказ"))
+            return "11999";
+        else if(string.equals("ООО Едим как дома"))
+            return "9999";
+
+        return "";
+    }
+
+    public String getOkdp(String string){
+        if(string.equals("ООО Вымпел"))
+            return "55.30";
+        else if(string.equals("ООО Заказ"))
+            return "11.03";
+        else if(string.equals("ООО Едим как дома"))
+            return "10.02";
+
+
+        return "";
+    }
+
+    public String getTypeOperations(String string){
+        if(string.equals("ООО Вымпел"))
+            return "01";
+        else if(string.equals("ООО Заказ"))
+            return "02";
+        else if(string.equals("ООО Едим как дома"))
+            return "03";
+
+        return "";
     }
 
     @FXML
     private void initialize(){
 
         infoAboutCompany = new InfoAboutCompany();
+        totalPrixod = new TotalPrixod();
+        totalRashod = new TotalRashod();
+
+        list.add("ООО Вымпел");
+        list.add("ООО Заказ");
+        list.add("ООО Едим как дома");
+
+        TextFields.bindAutoCompletion(nameOrganizaition,list);
+        nameOrganizaition.textProperty().addListener((observable, oldValue, newValue) -> {
+                numberDocument.setText(getNumTable(nameOrganizaition.getText()));
+                OKPO.setText(getOkpo(nameOrganizaition.getText()));
+                OKDP.setText(getOkdp(nameOrganizaition.getText()));
+                typeOperation.setText(getTypeOperations(nameOrganizaition.getText()));
+        });
 
         nameOrganizaition.setText("");
         OKPO.setText("");
         OKDP.setText("");
         typeOperation.setText("");
         numberDocument.setText("");
-        dateSost.setText("");
+        dateSost.setText(formatForDateNow.format(dateNow));
         fio.setText("");
         tableNum.setText("");
+
+        sumPrixodRashod.setText("0");
+        datePrixodRashod.setText(dateFactOst.getText());
+        stoimostPrixodRashod.setText("0");
+        productPrixodRashod.setText("0");
+        speciiAndSoltPrixodRashod.setText("0");
+        taraPrixodRashod.setText("0");
+        steklotaraPrixodRashod.setText("0");
+
+        totalPrixod.setSteklotaraPrixod("0");
+        totalPrixod.setTaraPrixod("0");
+        totalPrixod.setSpeciiAndSoltPrixod("0");
+        totalPrixod.setProductPrixod("0");
+        totalPrixod.setStoimostPrixod("0");
+        totalPrixod.setSumPrixod("0");
+
+        totalRashod.setSteklotaraRashod("0");
+        totalRashod.setTaraRashod("0");
+        totalRashod.setSpeciiAndSoltRashod("0");
+        totalRashod.setProductRashod("0");
+        totalRashod.setStoimostRashod("0");
+        totalRashod.setSumRashod("0");
+
 
         structPodr.getItems().setAll("Главный отдел", "Несовсем главный отдел", "Отдел кадров", "Бухгалтерия");
         dolgnost.getItems().setAll("Главный бухгалтер", "Неглавный бухгалтер", "Директор", "Зам.директора");
@@ -364,7 +533,7 @@ public class Controller {
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER && textField.getText().length() > 0) {
-                    Integer factOst = getFactOst(getTotal(total), name);
+                    Integer factOst = getFactOst(getTotal(stringData,total), name);
                     Integer raznica = factOst - Integer.parseInt(textField.getText());
                     if (raznica >= 0) {
                         labelDeficit.setText(raznica.toString());
@@ -378,7 +547,7 @@ public class Controller {
         });
     }
 
-    private Integer getTotal(String name){
+    private Integer getTotal(ObservableList<StringTableFirst> stringData,String name){
         int sum = 0;
         for(int i = 0; i < stringData.size(); i++){
             if ("sumTotal".equals(name)) {
@@ -426,13 +595,13 @@ public class Controller {
         stringDataForRash.add(new StringTableFirst(1,"",0,formatForDateNow.format(dateNow),null,0,0,0,0,0,""));
         countRash++;
 
-        sumTotal.setText(getTotal("sumTotal").toString());
+        sumTotal.setText(getTotal(stringData,"sumTotal").toString());
         dateTotal.setText(formatForDateNow.format(dateNow));
-        stoimostTotal.setText(getTotal("stoimostTotal").toString());
-        productTotal.setText(getTotal("productTotal").toString());
-        speciiAndSoltTotal.setText(getTotal("speciiAndSoltTotal").toString());
-        taraTotal.setText(getTotal("taraTotal").toString());
-        steklotaraTotal.setText(getTotal("steklotaraTotal").toString());
+        stoimostTotal.setText(getTotal(stringData,"stoimostTotal").toString());
+        productTotal.setText(getTotal(stringData,"productTotal").toString());
+        speciiAndSoltTotal.setText(getTotal(stringData,"speciiAndSoltTotal").toString());
+        taraTotal.setText(getTotal(stringData,"taraTotal").toString());
+        steklotaraTotal.setText(getTotal(stringData,"steklotaraTotal").toString());
 
         dateFactOst.setText(formatForDateNow.format(dateNow));
 
@@ -489,24 +658,72 @@ public class Controller {
             StringTableFirst stringTableFirst = event.getTableView().getItems().get(row);
             if ("SumFactRealize".equals(name)) {
                 stringTableFirst.setSumFactRealize(newName);
-                sumTotal.setText(getTotal("sumTotal").toString());
+                sumTotal.setText(getTotal(stringData,"sumTotal").toString());
+                if(numTable == 1){
+                    sumPrixodRashod.setText(String.valueOf(getTotal(stringData,"sumTotal") - stringData.get(0).getSumFactRealize()));
+                    totalPrixod.setSumPrixod(sumPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    sumPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"sumTotal")));
+                    totalRashod.setSumRashod(sumPrixodRashod.getText());
+                }
             } else if ("DocumentNumber".equals(name)) {
                 stringTableFirst.setDocumentNumber(newName);
             } else if ("SumUchot".equals(name)) {
                 stringTableFirst.setSumUchot(newName);
-                stoimostTotal.setText(getTotal("stoimostTotal").toString());
+                stoimostTotal.setText(getTotal(stringData,"stoimostTotal").toString());
+                if(numTable == 1){
+                    stoimostPrixodRashod.setText(String.valueOf(getTotal(stringData,"stoimostTotal") - stringData.get(0).getSumUchot()));
+                    totalPrixod.setStoimostPrixod(stoimostPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    stoimostPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"stoimostTotal")));
+                    totalRashod.setStoimostRashod(stoimostPrixodRashod.getText());
+                }
             } else if ("Product".equals(name)) {
                 stringTableFirst.setProduct(newName);
-                productTotal.setText(getTotal("productTotal").toString());
+                productTotal.setText(getTotal(stringData,"productTotal").toString());
+                if(numTable == 1){
+                    productPrixodRashod.setText(String.valueOf(getTotal(stringData,"productTotal") - stringData.get(0).getProduct()));
+                    totalPrixod.setProductPrixod(productPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    productPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"productTotal")));
+                    totalRashod.setProductRashod(productPrixodRashod.getText());
+                }
             } else if ("SpeciiAndSolt".equals(name)) {
                 stringTableFirst.setSpeciiAndSolt(newName);
-                speciiAndSoltTotal.setText(getTotal("speciiAndSoltTotal").toString());
+                speciiAndSoltTotal.setText(getTotal(stringData,"speciiAndSoltTotal").toString());
+                if(numTable == 1){
+                    speciiAndSoltPrixodRashod.setText(String.valueOf(getTotal(stringData,"speciiAndSoltTotal") - stringData.get(0).getSpeciiAndSolt()));
+                    totalPrixod.setSpeciiAndSoltPrixod(speciiAndSoltPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    speciiAndSoltPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"speciiAndSoltTotal")));
+                    totalRashod.setSpeciiAndSoltRashod(speciiAndSoltPrixodRashod.getText());
+                }
             } else if ("Tara".equals(name)) {
                 stringTableFirst.setTara(newName);
-                taraTotal.setText(getTotal("taraTotal").toString());
+                taraTotal.setText(getTotal(stringData,"taraTotal").toString());
+                if(numTable == 1){
+                    taraPrixodRashod.setText(String.valueOf(getTotal(stringData,"taraTotal") - stringData.get(0).getTara()));
+                    totalPrixod.setTaraPrixod(taraPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    taraPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"taraTotal")));
+                    totalRashod.setTaraRashod(taraPrixodRashod.getText());
+                }
             } else if ("Steklotara".equals(name)) {
                 stringTableFirst.setSteklotara(newName);
-                steklotaraTotal.setText(getTotal("steklotaraTotal").toString());
+                steklotaraTotal.setText(getTotal(stringData,"steklotaraTotal").toString());
+                if(numTable == 1){
+                    steklotaraPrixodRashod.setText(String.valueOf(getTotal(stringData,"steklotaraTotal") - stringData.get(0).getSteklotara()));
+                    totalPrixod.setSteklotaraPrixod(steklotaraPrixodRashod.getText());
+                }
+                if(numTable == 2){
+                    steklotaraPrixodRashod.setText(String.valueOf(getTotal(stringDataForRash,"steklotaraTotal")));
+                    totalRashod.setSteklotaraRashod(steklotaraPrixodRashod.getText());
+                }
             }
         });
     }

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.formula.functions.T;
 import sample.Information.InfoAboutCompany;
+import sample.Information.Rashifrovka;
 
 import javax.swing.text.TabableView;
 import java.io.*;
@@ -25,6 +26,7 @@ public class RoadToExcel {
     public static int[]masIndexCells;
     public static File file;
     public static FileInputStream inputStream;
+    private static int[]masIndexWorkers;
 
 
     public RoadToExcel() throws IOException {
@@ -35,6 +37,7 @@ public class RoadToExcel {
         spreadSheet = workbook.getSheetAt(0);
         formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
         masIndexCells = new int[]{0,10,14,18,22,28,32,36,39,42};
+        masIndexWorkers = new int[]{6,25};
     }
 
 
@@ -107,6 +110,13 @@ public class RoadToExcel {
              * Итого по приходу
              */
             for(int i = 2; i < tableView.getColumns().size(); i++){
+                editToCellTableColumn(47,masIndexCells[i-1],tableView,tableView.getItems().size()-2,i);
+            }
+
+            /**
+             * Итого по приходу с остатком
+             */
+            for(int i = 2; i < tableView.getColumns().size(); i++){
                 editToCellTableColumn(48,masIndexCells[i-1],tableView,tableView.getItems().size()-1,i);
             }
 
@@ -124,66 +134,90 @@ public class RoadToExcel {
              * Расход
              */
             for (int i = 1; i < tableView.getColumns().size(); i++) {
-                for (int j = 0; j < tableView.getItems().size()-2; j++) {
+                for (int j = 0; j < tableView.getItems().size()-5; j++) {
                     editToCellTableColumn(j + 59, masIndexCells[i - 1], tableView, j, i);
                 }
             }
+
+            /**
+             * Всего по расходу
+             */
+
+            for(int i = 2; i < tableView.getColumns().size(); i++){
+                editToCellTableColumn(73,masIndexCells[i-1],tableView,tableView.getItems().size()-5,i);
+            }
+
 
             /**
              * Остаток на конец дня
              */
 
             for(int i = 2; i < tableView.getColumns().size(); i++){
-                editToCellTableColumn(74,masIndexCells[i-1],tableView,tableView.getItems().size()-1,i);
+                editToCellTableColumn(74,masIndexCells[i-1],tableView,tableView.getItems().size()-4,i);
+            }
+
+            /**
+             * Фактический остаток
+             */
+
+            for(int i = 2; i < tableView.getColumns().size(); i++){
+                editToCellTableColumn(76,masIndexCells[i-1],tableView,tableView.getItems().size()-3,i);
+            }
+
+            /**
+             * Излишки/недостача
+             */
+
+            for(int i = 2; i < tableView.getColumns().size(); i++){
+                editToCellTableColumn(78,masIndexCells[i-1],tableView,tableView.getItems().size()-2,i);
+            }
+
+            for(int i = 2; i < tableView.getColumns().size(); i++){
+                editToCellTableColumn(79,masIndexCells[i-1],tableView,tableView.getItems().size()-1,i);
             }
         }
     }
 
-/*
-    public void exportToExcelInfoAboutCompany(InfoAboutCompany infoAboutCompany){
+    /**
+     * Заполняем расшифровку подписей
+     */
+
+    public void exportToExcelRash(Rashifrovka rashifrovka){
+        editToCell(83,16,rashifrovka.getMaterialPodpis());
+
+        editToCell(93,22,rashifrovka.getDognost());
+
+        editToCell(93,37,rashifrovka.getRashifrovka());
+
+        editToCell(96,11,rashifrovka.getMainSolution());
+
+        editToCell(99,7,rashifrovka.getMainDolgnost());
+
+        editToCell(99,31,rashifrovka.getRashRuk());
+    }
 
 
-        HSSFRow hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(9).setCellValue("Униицированная форма № ОП-14");
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(9).setCellValue("Утверждена постоновлением Госкомстата");
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(9).setCellValue("Росии от 25.12.98 № 132");
-        rowCount++;
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(10).setCellValue("Код");
-        rowCount++;
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(8).setCellValue("Форма");
-        hssfRow.createCell(9).setCellValue("по ОКУД");
-        hssfRow.createCell(11).setCellValue("0330514");
-        hssfRow = spreadSheet.createRow(rowCount++);
-        CellRangeAddress region = new CellRangeAddress(rowCount-1,rowCount-1,1,8);
-        hssfRow.createCell(1).setCellValue(infoAboutCompany.getNameOrganization());
-        hssfRow.createCell(9).setCellValue("по ОКПО");
-        hssfRow.createCell(11).setCellValue(infoAboutCompany.getOkpo());
-        spreadSheet.addMergedRegion(region);
-        hssfRow = spreadSheet.createRow(rowCount++);
-        region = new CellRangeAddress(rowCount-1,rowCount-1,1,8);
-        spreadSheet.addMergedRegion(region);
-        hssfRow.createCell(1).setCellValue(infoAboutCompany.getStructurePodr());
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(7).setCellValue("Вид деятельности по ОКДП");
-        hssfRow.createCell(11).setCellValue(infoAboutCompany.getOkdp());
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(8).setCellValue("Вид операции");
-        hssfRow.createCell(11).setCellValue(infoAboutCompany.getTypeOperation());
-        rowCount++;
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(8).setCellValue("Номер документа");
-        hssfRow.createCell(10).setCellValue("Дата составления");
-        region = new CellRangeAddress(rowCount,rowCount,3,7);
-        spreadSheet.addMergedRegion(region);
-        hssfRow = spreadSheet.createRow(rowCount++);
-        hssfRow.createCell(3).setCellValue("ВЕДОМОСТЬ УЧЕТА");
+    /**
+     * Заполняем таблицу работников
+     */
+
+    public void exportToExcelTableWorkers(TableView<T> tableView){
+
+        int counPlusStr = 86; //По форме здесь начинаются поля с работниками
+        for(int i = 1; i < tableView.getColumns().size(); i++){
+            int k = 0;
+            for(int j = 0; j < tableView.getItems().size() && k < 2; j++, k++){
+                editToCellTableColumn(counPlusStr,masIndexWorkers[k],tableView,j,i);
+            }
+            counPlusStr += 2;
+        }
 
     }
-*/
+
+    /**
+     *
+     * @throws IOException
+     */
 
     public void closeFiles() throws IOException {
 
